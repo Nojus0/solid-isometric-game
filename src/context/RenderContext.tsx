@@ -45,9 +45,9 @@ function createRenderContext() {
   };
 }
 
-type T = ReturnType<typeof createRenderContext>;
+export type RenderContext = ReturnType<typeof createRenderContext>;
 
-export const RenderContext = createContext<T>();
+export const RenderContext = createContext<RenderContext>();
 export const useRenderContext = () => {
   const ctx = useContext(RenderContext);
 

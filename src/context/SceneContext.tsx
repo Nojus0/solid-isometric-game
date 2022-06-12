@@ -8,7 +8,7 @@ import {
   useContext,
 } from "solid-js";
 import { GameObject } from "../components/GameObject";
-import { useRenderContext } from "./RenderContext";
+import { RenderContext, useRenderContext } from "./RenderContext";
 
 function createSceneContext() {
   const gameObjects = new Set<GameObject>();
@@ -28,9 +28,9 @@ function createSceneContext() {
   };
 }
 
-type T = ReturnType<typeof createSceneContext>;
+export type SceneContext = ReturnType<typeof createSceneContext>;
 
-export const SceneContext = createContext<T>();
+export const SceneContext = createContext<SceneContext>();
 export const useSceneContext = () => {
   const ctx = useContext(SceneContext);
 
@@ -41,7 +41,23 @@ export const useSceneContext = () => {
   return ctx;
 };
 
-export function SceneContextProvider(p: ParentProps) {
+export interface Scene {
+  beforeRender?: (
+    Scene: SceneContext,
+    DrawApiContext: CanvasRenderingContext2D,
+    CanvasRef: HTMLCanvasElement,
+    RenderContext: RenderContext
+  ) => void;
+
+  afterRender?: (
+    Scene: SceneContext,
+    DrawApiContext: CanvasRenderingContext2D,
+    CanvasRef: HTMLCanvasElement,
+    RenderContext: RenderContext
+  ) => void;
+}
+
+export function SceneContextProvider(p: ParentProps<Scene>) {
   const ctx = createSceneContext();
 
   const renderContext = useRenderContext();
@@ -49,16 +65,22 @@ export function SceneContextProvider(p: ParentProps) {
   const canvasRef = renderContext.getCanvas();
 
   function loop() {
-    render.clearRect(0, 0, canvasRef.width, canvasRef.height);
-    render.imageSmoothingEnabled = false;
     render.save();
-    // render.translate(innerWidth / 2, 0);
-    render.scale(5, 5);
+
+    if (p.beforeRender) {
+      p.beforeRender(ctx, render, canvasRef, renderContext);
+    }
+
     for (const gameObject of ctx.gameObjects) {
       for (const script of gameObject.scripts) {
         script(gameObject);
       }
     }
+
+    if (p.afterRender) {
+      p.afterRender(ctx, render, canvasRef, renderContext);
+    }
+
     render.restore();
 
     requestAnimationFrame(loop);

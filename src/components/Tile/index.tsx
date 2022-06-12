@@ -23,16 +23,17 @@ const Tile: Component<Vector2 & { index: number }> = (p) => {
   function Draw() {
     if (loading) return;
     render.save();
+
     render.drawImage(
       texture,
-      32 * p.index,
+      TILE_SIZE * p.index,
       0,
-      32,
-      32,
-      p.x * 0.5 * TILE_SIZE + p.y + -0.5 * TILE_SIZE,
-      p.x * 0.25 * TILE_SIZE + p.y * 0.25 * TILE_SIZE,
-      32,
-      32
+      TILE_SIZE,
+      TILE_SIZE,
+      (p.x * 0.5 * TILE_SIZE) + (p.y * -0.5 * TILE_SIZE),
+      (p.x * 0.25 * TILE_SIZE) + (p.y * 0.25 * TILE_SIZE),
+      TILE_SIZE,
+      TILE_SIZE
     );
     render.restore();
   }
