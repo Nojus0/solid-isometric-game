@@ -1,9 +1,9 @@
 /* @refresh reload */
 
-import { batch, onCleanup, onMount } from "solid-js";
+import { batch, JSX, onCleanup, onMount } from "solid-js";
 import { useRenderContext } from "../../context/RenderContext";
 
-export function Canvas() {
+export function Canvas(p: JSX.CanvasHTMLAttributes<HTMLCanvasElement>) {
   const ctx = useRenderContext();
 
   // * Run before first Render *
@@ -25,8 +25,8 @@ export function Canvas() {
   function SetCanvasSize(canvas: HTMLCanvasElement) {
     canvas.style.height = "100%";
     canvas.style.width = "100%";
-    canvas.height = innerHeight;
-    canvas.width = innerWidth;
+    canvas.height = innerHeight * devicePixelRatio;
+    canvas.width = innerWidth * devicePixelRatio;
   }
 
   onMount(() => {
@@ -45,5 +45,5 @@ export function Canvas() {
     onCleanup(() => removeEventListener("resize", handleResize));
   });
 
-  return <canvas ref={OnCanvasRef}></canvas>;
+  return <canvas {...p} ref={OnCanvasRef}></canvas>;
 }

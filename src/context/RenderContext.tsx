@@ -1,9 +1,7 @@
 /* @refresh reload */
 
 import {
-  batch,
   createContext,
-  createMemo,
   createSignal,
   ParentProps,
   useContext,

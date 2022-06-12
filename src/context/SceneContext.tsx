@@ -1,12 +1,6 @@
 /* @refresh reload */
 
-import {
-  createContext,
-  createSignal,
-  onMount,
-  ParentProps,
-  useContext,
-} from "solid-js";
+import { createContext, ParentProps, useContext } from "solid-js";
 import { GameObject } from "../components/GameObject";
 import { RenderContext, useRenderContext } from "./RenderContext";
 
@@ -66,7 +60,6 @@ export function SceneContextProvider(p: ParentProps<Scene>) {
 
   function loop() {
     render.save();
-
     if (p.beforeRender) {
       p.beforeRender(ctx, render, canvasRef, renderContext);
     }
