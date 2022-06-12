@@ -1,21 +1,41 @@
-import { Component } from "solid-js";
+import { Component, onCleanup, onMount } from "solid-js";
 import { useRenderContext } from "../../context/RenderContext";
+import { useSceneContext } from "../../context/SceneContext";
+import { GameObject } from "../GameObject";
 
 const Tile: Component = () => {
-  const renderCtx = useRenderContext();
+  const ctx = useRenderContext();
+  const scene = useSceneContext();
+  const render = ctx.getRender();
 
-  if (!renderCtx) {
-    console.error(`[Tile Component] -> Render context not found.`);
-    return null;
+  let ref: GameObject;
+
+  function Draw() {
+    render.beginPath();
+    render.fillStyle = "black";
+    render.rect(100, 100, 100, 100);
+    render.stroke();
+
+    render.font = "5rem sans-serif";
+    render.fillText("hello", 1000, 500);
   }
 
-  const canvasRef = renderCtx.canvasRef();
+  onMount(() => {
+    ref = {
+      name: "Grass",
+      type: "Tile",
+      scripts: [Draw],
+    };
+    scene.addObject(ref);
+  });
 
-  if (!canvasRef) {
-    console.error("[Tile Component] -> Canvas not set.");
-    return null;
-  }
-
+  onCleanup(() => {
+    const a = scene.gameObjects.size;
+    scene.removeObjectRef(ref);
+    if (scene.gameObjects.size == a) {
+      console.error("After cleanup GameObject is not removed");
+    }
+  });
 
   return null;
 };

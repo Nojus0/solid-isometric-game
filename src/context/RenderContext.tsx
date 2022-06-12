@@ -1,56 +1,64 @@
 import {
   batch,
   createContext,
+  createMemo,
   createSignal,
   ParentProps,
   useContext,
 } from "solid-js";
 
 function createRenderContext() {
-  const [canvasRef, setCanvasRef] = createSignal<HTMLCanvasElement | null>();
-  const [render, setRender] = createSignal<CanvasRenderingContext2D | null>();
+  const [canvasRef, setCanvasRef] = createSignal<HTMLCanvasElement>();
+  const [renderContext2d, setRender] = createSignal<CanvasRenderingContext2D>();
+
+  function getRender() {
+    const a = renderContext2d();
+
+    if (!a) {
+      throw new Error(
+        "[createRenderContext] tried to access 2d context api without it set."
+      );
+    }
+
+    return a;
+  }
+
+  function getCanvas() {
+    const b = canvasRef();
+
+    if (!b) {
+      throw new Error(
+        "[createRenderContext] tried to access canvas without it being set."
+      );
+    }
+
+    return b;
+  }
+
   return {
-    canvasRef,
     setCanvasRef,
-    render,
     setRender,
+    getCanvas,
+    getRender,
   };
 }
 
 type T = ReturnType<typeof createRenderContext>;
 
 export const RenderContext = createContext<T>();
-export const useRenderContext = () => useContext(RenderContext);
+export const useRenderContext = () => {
+  const ctx = useContext(RenderContext);
+
+  if (!ctx) {
+    throw new Error("[Render Context] was not found.");
+  }
+
+  return ctx;
+};
 
 export function RenderContextProvider(p: ParentProps) {
   const ctx = createRenderContext();
   return (
     <RenderContext.Provider value={ctx}>{p.children}</RenderContext.Provider>
   );
-}
-
-export function Canvas() {
-  const ctx = useRenderContext();
-  
-  if (!ctx) {
-    console.error("[Canvas Component] -> No render context found.");
-    return null;
-  }
-
-
-  // * Run before first Render *
-  const OnContext = (element: HTMLCanvasElement) => {
-    const api = element.getContext("2d");
-
-    if (!api) {
-      return console.error(`[Canvas Component] Couldn't get 2D Context.`);
-    }
-
-    batch(() => {
-      ctx.setCanvasRef(element);
-      ctx.setRender(api);
-    });
-  };
-
-  return <canvas ref={OnContext}></canvas>;
 }

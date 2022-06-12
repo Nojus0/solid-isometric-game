@@ -1,14 +1,17 @@
 import { Component } from "solid-js";
-import { SceneContextProvider } from "../../context/SceneContext";
-import { Canvas, RenderContextProvider } from "../../context/RenderContext";
+import { SceneContextProvider as Scene } from "../../context/SceneContext";
+import { RenderContextProvider as Render } from "../../context/RenderContext";
+import Tile from "../../components/Tile";
+import { Canvas } from "../../components/Canvas";
 
 const App: Component = () => {
   return (
-    <RenderContextProvider>
-      <SceneContextProvider>
-        <Canvas />
-      </SceneContextProvider>
-    </RenderContextProvider>
+    <Render>
+      <Canvas />
+      <Scene>
+        <Tile />
+      </Scene>
+    </Render>
   );
 };
 
