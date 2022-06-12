@@ -1,9 +1,19 @@
+/* @refresh reload */
+
 import { Component, onCleanup, onMount } from "solid-js";
 import { useRenderContext } from "../../context/RenderContext";
 import { useSceneContext } from "../../context/SceneContext";
 import { GameObject } from "../GameObject";
+import { Vector2 } from "../Math/Utils";
 
-const Tile: Component = () => {
+export const TILE_SIZE = 32;
+
+let loading = true;
+export const texture = new Image();
+texture.src = "/Grass.png";
+texture.onload = () => (loading = false);
+
+const Tile: Component<Vector2 & { index: number }> = (p) => {
   const ctx = useRenderContext();
   const scene = useSceneContext();
   const render = ctx.getRender();
@@ -11,13 +21,20 @@ const Tile: Component = () => {
   let ref: GameObject;
 
   function Draw() {
-    render.beginPath();
-    render.fillStyle = "black";
-    render.rect(100, 100, 100, 100);
-    render.stroke();
-
-    render.font = "5rem sans-serif";
-    render.fillText("hello", 1000, 500);
+    if (loading) return;
+    render.save();
+    render.drawImage(
+      texture,
+      32 * p.index,
+      0,
+      32,
+      32,
+      p.x * 0.5 * TILE_SIZE + p.y + -0.5 * TILE_SIZE,
+      p.x * 0.25 * TILE_SIZE + p.y * 0.25 * TILE_SIZE,
+      32,
+      32
+    );
+    render.restore();
   }
 
   onMount(() => {

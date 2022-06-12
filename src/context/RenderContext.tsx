@@ -1,3 +1,5 @@
+/* @refresh reload */
+
 import {
   batch,
   createContext,

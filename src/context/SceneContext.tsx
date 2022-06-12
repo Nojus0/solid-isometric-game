@@ -1,3 +1,5 @@
+/* @refresh reload */
+
 import {
   createContext,
   createSignal,
@@ -48,11 +50,16 @@ export function SceneContextProvider(p: ParentProps) {
 
   function loop() {
     render.clearRect(0, 0, canvasRef.width, canvasRef.height);
+    render.imageSmoothingEnabled = false;
+    render.save();
+    // render.translate(innerWidth / 2, 0);
+    render.scale(5, 5);
     for (const gameObject of ctx.gameObjects) {
       for (const script of gameObject.scripts) {
         script(gameObject);
       }
     }
+    render.restore();
 
     requestAnimationFrame(loop);
   }

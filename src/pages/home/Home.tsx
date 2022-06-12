@@ -1,3 +1,5 @@
+/* @refresh reload */
+
 import { Component } from "solid-js";
 import { SceneContextProvider as Scene } from "../../context/SceneContext";
 import { RenderContextProvider as Render } from "../../context/RenderContext";
@@ -9,7 +11,10 @@ const App: Component = () => {
     <Render>
       <Canvas />
       <Scene>
-        <Tile />
+        <Tile x={0} y={0} index={0}/>
+        <Tile x={1} y={0} index={1}/>
+        <Tile x={2} y={0} index={2}/>
+        <Tile x={3} y={0} index={3}/>
       </Scene>
     </Render>
   );

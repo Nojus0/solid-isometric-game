@@ -1,3 +1,5 @@
+/* @refresh reload */
+
 import { batch, onCleanup, onMount } from "solid-js";
 import { useRenderContext } from "../../context/RenderContext";
 
