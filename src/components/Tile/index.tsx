@@ -4,12 +4,19 @@ import { Component, onCleanup, onMount } from "solid-js";
 import { useRenderContext } from "../../context/RenderContext";
 import { useSceneContext } from "../../context/SceneContext";
 import { GameObject } from "../GameObject";
-import { Vector2 } from "../Math/Utils";
+import { TextureDescriptor } from "../Texture/main/descriptor";
+import { mapping } from "../Texture/mapping";
 import { gTextures } from "../Texture/TextureLoader";
 
 export const TILE_SIZE = 32;
 
-const Tile: Component<Vector2 & { index: number }> = (p) => {
+export interface Tile {
+  texture: TextureDescriptor;
+  x: number
+  y: number
+}
+
+const Tile: Component<Tile> = (p) => {
   const ctx = useRenderContext();
   const scene = useSceneContext();
   const render = ctx.getRender();
@@ -20,11 +27,11 @@ const Tile: Component<Vector2 & { index: number }> = (p) => {
     render.save();
 
     render.drawImage(
-      gTextures.get("/Grass.png")!,
-      TILE_SIZE * p.index,
-      0,
-      TILE_SIZE,
-      TILE_SIZE,
+      gTextures.get(mapping.main)!,
+      p.texture.pos.x,
+      p.texture.pos.y,
+      p.texture.size.x,
+      p.texture.size.y,
       p.x * 0.5 * TILE_SIZE + p.y * -0.5 * TILE_SIZE,
       p.x * 0.25 * TILE_SIZE + p.y * 0.25 * TILE_SIZE,
       TILE_SIZE,

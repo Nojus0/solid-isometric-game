@@ -1,6 +1,6 @@
 /* @refresh reload */
 
-import { Component, createContext, createSignal, Show } from "solid-js";
+import { Component } from "solid-js";
 import {
   SceneContext,
   SceneContextProvider as Scene,
@@ -8,8 +8,11 @@ import {
 import { RenderContextProvider as Render } from "../../context/RenderContext";
 import Tile, { TILE_SIZE } from "../../components/Tile";
 import { Canvas } from "../../components/Canvas";
-import TextureLoader from "../../components/Texture/TextureLoader";
+import TextureLoader from "@Components/Texture/TextureLoader";
 import styles from "./Home.module.css";
+import { mapping } from "@Components/Texture/mapping";
+import { Descriptor } from "@Components/Texture/main/descriptor";
+
 const App: Component = () => {
   function beforeRender(
     _: SceneContext,
@@ -23,16 +26,12 @@ const App: Component = () => {
 
     render.scale(8, 8);
   }
-
   return (
-    <TextureLoader load={["/Grass.png"]}>
+    <TextureLoader load={[mapping.main]}>
       <Render>
         <Canvas class={styles.player} />
         <Scene beforeRender={beforeRender}>
-          <Tile x={0} y={0} index={0} />
-          <Tile x={1} y={0} index={2} />
-          <Tile x={2} y={0} index={2} />
-        
+          <Tile texture={Descriptor.Grass.Normal} x={0} y={0} />
         </Scene>
       </Render>
     </TextureLoader>
