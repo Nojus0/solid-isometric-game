@@ -34,8 +34,8 @@ const Tile: Component<Tile> = (p) => {
       p.texture.size.y,
       p.x * 0.5 * TILE_SIZE + p.y * -0.5 * TILE_SIZE,
       p.x * 0.25 * TILE_SIZE + p.y * 0.25 * TILE_SIZE,
-      TILE_SIZE,
-      TILE_SIZE
+      p.texture.size.x,
+      p.texture.size.y,
     );
     render.restore();
   }

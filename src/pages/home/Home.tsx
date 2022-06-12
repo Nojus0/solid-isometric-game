@@ -13,7 +13,7 @@ import styles from "./Home.module.css";
 import { mapping } from "@Components/Texture/mapping";
 import { Descriptor } from "@Components/Texture/main/descriptor";
 
-const App: Component = () => {
+const Home: Component = () => {
   function beforeRender(
     _: SceneContext,
     render: CanvasRenderingContext2D,
@@ -32,10 +32,13 @@ const App: Component = () => {
         <Canvas class={styles.player} />
         <Scene beforeRender={beforeRender}>
           <Tile texture={Descriptor.Grass.Normal} x={0} y={0} />
+          <Tile texture={Descriptor.Grass.Normal} x={1} y={0} />
+          <Tile texture={Descriptor.Grass.Normal} x={0} y={1} />
+          <Tile texture={Descriptor.Grass.Normal} x={1} y={1} />
         </Scene>
       </Render>
     </TextureLoader>
   );
 };
 
-export default App;
+export default Home;

@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  solid-app-router: ^0.3.3
   solid-js: ^1.4.2
   typescript: ^4.6.4
   vite: ^2.9.9
@@ -8,6 +9,7 @@ specifiers:
   vite-tsconfig-paths: ^3.5.0
 
 dependencies:
+  solid-app-router: 0.3.3_solid-js@1.4.2
   solid-js: 1.4.2
 
 devDependencies:
@@ -818,6 +820,14 @@ packages:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
     dev: true
+
+  /solid-app-router/0.3.3_solid-js@1.4.2:
+    resolution: {integrity: sha512-JEn0gi6q8Pq9M2Ml3CLeNzenxuBrOrQg4aQyeIZTNjOAeEil/9YiaAJk+US78sIdVcqflTneN5KZgJMIGJ0rFQ==}
+    peerDependencies:
+      solid-js: ^1.3.5
+    dependencies:
+      solid-js: 1.4.2
+    dev: false
 
   /solid-js/1.4.2:
     resolution: {integrity: sha512-IU5yKuT8P/n5F5g8j1rTXqxUdPYmoZDk/074TG94AEYf/nyXAeG82BSge4/lLIbCfUcnGUJ6DRdebIjujOAYyg==}
