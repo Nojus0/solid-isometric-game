@@ -4,7 +4,8 @@ import { lazy, Suspense } from "solid-js"
 import { render } from "solid-js/web"
 import Home from "./pages/home"
 
-const TestPage = lazy(() => import("./pages/test"))
+
+const TestRoute = lazy(() => import("./pages/test"))
 
 render(
   () => (
@@ -12,7 +13,7 @@ render(
       <Suspense>
         <Routes>
           <Route path="/" component={Home} />
-          <Route path="/test" component={TestPage} />
+          <Route path="/test" component={TestRoute} />
         </Routes>
       </Suspense>
     </Router>
