@@ -1,7 +1,7 @@
 /* @refresh reload */
 
 import { Component } from "solid-js"
-import { createGameObject, GameObject, ScriptParameters } from "../GameObject"
+import { createGameObject, ScriptParameters } from "../GameObject"
 import { TextureDescriptor } from "../Texture/main/descriptor"
 import { mapping } from "../Texture/mapping"
 import { gTextures } from "../Texture/TextureLoader"
