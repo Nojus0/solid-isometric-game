@@ -71,6 +71,10 @@ export function SceneContextProvider(p: ParentProps<SceneProps>) {
     if (isCleanup) return;
 
     render.save();
+
+    render.imageSmoothingEnabled = false;
+    render.clearRect(0, 0, canvasRef.width, canvasRef.height);
+
     p.beforeRender && p.beforeRender(context);
 
     for (const gameObject of Scene.gameObjects) {

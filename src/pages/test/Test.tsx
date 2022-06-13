@@ -6,7 +6,7 @@ import {
   SceneContextProvider as Scene,
 } from "@Context/SceneContext";
 import { RenderContextProvider as Render } from "@Context/RenderContext";
-import Tile from "@Components/Tile";
+import Tile, { TILE_SCALE } from "@Components/Tile";
 import { Canvas } from "@Components/Canvas";
 import TextureLoader from "@Components/Texture/TextureLoader";
 import styles from "../home/Home.module.css";
@@ -17,14 +17,6 @@ import { Script } from "@Components/GameObject";
 import { Link } from "solid-app-router";
 
 const Test: Component = () => {
-  const beforeRender: Script = (ctx) => {
-    ctx.render.imageSmoothingEnabled = false;
-    ctx.render.clearRect(0, 0, ctx.canvasRef.width, ctx.canvasRef.height);
-    // render.translate(-16, 0);
-    // render.translate(innerWidth / 2, 0);
-
-    ctx.render.scale(6, 6);
-  };
   return (
     <>
       <Link class={styles.link} href="/">
@@ -33,8 +25,8 @@ const Test: Component = () => {
       <TextureLoader load={[mapping.main]}>
         <Render>
           <Canvas />
-          <Scene beforeRender={beforeRender}>
-            <Camera />
+          <Scene>
+            <Camera Speed={15}/>
             <Tile texture={Descriptor.Grass.Normal} x={0} y={0} />
             <Tile texture={Descriptor.Grass.Small} x={0} y={1} />
             <Tile texture={Descriptor.Grass.Bits} x={0} y={2} />
@@ -54,7 +46,7 @@ const Test: Component = () => {
 
             <Tile texture={Descriptor.Campfire.Normal} x={5} y={0} />
 
-            <Tile texture={Descriptor.Tree.Normal} x={5} y={-1} />
+            <Tile texture={Descriptor.Tree.Normal} x={6} y={0} />
           </Scene>
         </Render>
       </TextureLoader>

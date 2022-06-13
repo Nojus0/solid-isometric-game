@@ -3,24 +3,28 @@
 import { Component, onCleanup, onMount } from "solid-js";
 import { createGameObject, ScriptParameters } from "../GameObject";
 
-const Camera: Component = (p) => {
-  let MovementX = 0;
+export interface Camera {
+  Speed: number
+}
+
+// Precise coords with tile scale?
+const Camera: Component<Camera> = (p) => {
+  let MovementX = innerWidth / 8;
   let MovementY = 0;
-  const Speed = 3;
   const Keyboard = new Map<string, boolean>([]);
 
   function Draw(ctx: ScriptParameters) {
     if (Keyboard.get("w")) {
-      MovementY += Speed;
+      MovementY += p.Speed;
     }
     if (Keyboard.get("s")) {
-      MovementY -= Speed;
+      MovementY -= p.Speed;
     }
     if (Keyboard.get("a")) {
-      MovementX += Speed;
+      MovementX += p.Speed;
     }
     if (Keyboard.get("d")) {
-      MovementX -= Speed;
+      MovementX -= p.Speed;
     }
 
     ctx.render.translate(MovementX, MovementY);
