@@ -9,9 +9,8 @@ import { RenderContextProvider as Render } from "../../context/RenderContext"
 import Tile, { TILE_SCALE, TILE_SIZE } from "../../components/Tile"
 import { Canvas } from "../../components/Canvas"
 import TextureLoader from "@Components/Texture/TextureLoader"
-import styles from "./Home.module.css"
 import { mapping } from "@Components/Texture/mapping"
-import { Descriptor } from "@Components/Texture/main/descriptor"
+import Descriptor from "@Components/Texture/main/descriptor"
 import { Script } from "@Components/GameObject"
 import { Link } from "solid-app-router"
 
@@ -23,7 +22,7 @@ const Home: Component = () => {
 
   return (
     <>
-      <Link class={styles.link} href="/test">
+      <Link class="link" href="/test">
         Go to Test
       </Link>
       <TextureLoader load={[mapping.main]}>

@@ -1,32 +1,30 @@
 /* @refresh reload */
 
-import { Component } from "solid-js";
+import { Component } from "solid-js"
 import {
   SceneContext,
   SceneContextProvider as Scene,
-} from "@Context/SceneContext";
-import { RenderContextProvider as Render } from "@Context/RenderContext";
-import Tile, { TILE_SCALE } from "@Components/Tile";
-import { Canvas } from "@Components/Canvas";
-import TextureLoader from "@Components/Texture/TextureLoader";
-import styles from "../home/Home.module.css";
-import { mapping } from "@Components/Texture/mapping";
-import { Descriptor } from "@Components/Texture/main/descriptor";
-import Camera from "@Components/Camera";
-import { Script } from "@Components/GameObject";
-import { Link } from "solid-app-router";
+} from "@Context/SceneContext"
+import { RenderContextProvider as Render } from "@Context/RenderContext"
+import Tile, { TILE_SCALE } from "@Components/Tile"
+import { Canvas } from "@Components/Canvas"
+import TextureLoader from "@Components/Texture/TextureLoader"
+import { mapping } from "@Components/Texture/mapping"
+import Descriptor from "@Components/Texture/main/descriptor"
+import Camera from "@Components/Camera"
+import { Link } from "solid-app-router"
 
 const Test: Component = () => {
   return (
     <>
-      <Link class={styles.link} href="/">
+      <Link class="link" href="/">
         Go to Home
       </Link>
       <TextureLoader load={[mapping.main]}>
         <Render>
           <Canvas />
           <Scene>
-            <Camera Speed={15}/>
+            <Camera Speed={15} />
             <Tile texture={Descriptor.Grass.Normal} x={0} y={0} />
             <Tile texture={Descriptor.Grass.Small} x={0} y={1} />
             <Tile texture={Descriptor.Grass.Bits} x={0} y={2} />
@@ -51,7 +49,7 @@ const Test: Component = () => {
         </Render>
       </TextureLoader>
     </>
-  );
-};
+  )
+}
 
-export default Test;
+export default Test

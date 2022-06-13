@@ -1,12 +1,12 @@
-import { Vector2 } from "../../Math/Utils";
+import { Vector2 } from "../../Math/Utils"
 
 export interface TextureDescriptor {
-  name: string;
-  pos: Vector2;
-  size: Vector2;
+  name: string
+  pos: Vector2
+  size: Vector2
 }
 
-export const Descriptor = {
+const Descriptor = {
   Grass: {
     Normal: {
       name: "Grass_Normal",
@@ -92,4 +92,6 @@ export const Descriptor = {
       size: { x: 32, y: 56 },
     },
   },
-};
+}
+
+export default Descriptor

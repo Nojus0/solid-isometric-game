@@ -1,17 +1,21 @@
 /* @refresh reload */
-import { Route, Router, Routes } from "solid-app-router";
-import { render } from "solid-js/web";
-import Home from "./pages/home/Home";
-import Test from "./pages/test/Test";
+import { Route, Router, Routes } from "solid-app-router"
+import { lazy, Suspense } from "solid-js"
+import { render } from "solid-js/web"
+import Home from "./pages/home"
+
+const TestPage = lazy(() => import("./pages/test"))
 
 render(
   () => (
     <Router>
-      <Routes>
-        <Route path="/" component={Home} />
-        <Route path="/test" component={Test} />
-      </Routes>
+      <Suspense>
+        <Routes>
+          <Route path="/" component={Home} />
+          <Route path="/test" component={TestPage} />
+        </Routes>
+      </Suspense>
     </Router>
   ),
   document.getElementById("root") as HTMLElement
-);
+)
