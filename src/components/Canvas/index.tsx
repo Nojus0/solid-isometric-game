@@ -1,49 +1,37 @@
 /* @refresh reload */
 
-import { batch, JSX, onCleanup, onMount } from "solid-js";
+import { batch, createComputed, JSX, onCleanup, onMount } from "solid-js";
 import { useRenderContext } from "../../context/RenderContext";
+
+function SetCanvasSize(canvas: HTMLCanvasElement) {
+  canvas.style.height = "100%";
+  canvas.style.width = "100%";
+  canvas.height = innerHeight * devicePixelRatio;
+  canvas.width = innerWidth * devicePixelRatio;
+}
 
 export function Canvas(p: JSX.CanvasHTMLAttributes<HTMLCanvasElement>) {
   const ctx = useRenderContext();
 
-  // * Run before first Render *
-  const OnCanvasRef = (element: HTMLCanvasElement) => {
-    const api = element.getContext("2d");
+  const Canvas = (<canvas {...p}></canvas>) as HTMLCanvasElement;
 
-    if (!api) {
-      return console.error(`[Canvas Component] Couldn't get 2D Context.`);
-    }
+  const Rendering2DContext = Canvas.getContext("2d");
 
-    batch(() => {
-      ctx.setCanvasRef(element);
-      ctx.setRender(api);
-    });
-
-    SetCanvasSize(element);
-  };
-
-  function SetCanvasSize(canvas: HTMLCanvasElement) {
-    canvas.style.height = "100%";
-    canvas.style.width = "100%";
-    canvas.height = innerHeight * devicePixelRatio;
-    canvas.width = innerWidth * devicePixelRatio;
+  if (!Rendering2DContext) {
+    throw new Error(`[Canvas Component] Couldn't get 2D Context.`);
   }
 
-  onMount(() => {
-    const element = ctx.getCanvas();
-
-    if (!element) {
-      console.error(
-        "[Canvas Component] onMount() -> Canvas Element not captured."
-      );
-      return;
-    }
-
-    const handleResize = () => SetCanvasSize(element);
-
-    addEventListener("resize", handleResize);
-    onCleanup(() => removeEventListener("resize", handleResize));
+  batch(() => {
+    ctx.setCanvasRef(Canvas);
+    ctx.setRender(Rendering2DContext);
   });
 
-  return <canvas {...p} ref={OnCanvasRef}></canvas>;
+  SetCanvasSize(Canvas);
+
+  const handleResize = () => SetCanvasSize(Canvas);
+
+  addEventListener("resize", handleResize);
+  onCleanup(() => removeEventListener("resize", handleResize));
+
+  return Canvas;
 }

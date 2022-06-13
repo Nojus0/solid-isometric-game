@@ -9,6 +9,7 @@ interface TextureLoader {
   onError?: () => void;
 }
 
+
 const TextureLoader: Component<TextureLoader> = (p) => {
   const [status, setStatus] = createSignal<"Loading" | "Success" | "Failure">(
     "Loading"

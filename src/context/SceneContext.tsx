@@ -1,7 +1,7 @@
 /* @refresh reload */
 
-import { createContext, ParentProps, useContext } from "solid-js";
-import { GameObject } from "../components/GameObject";
+import { createContext, createEffect, ParentProps, useContext } from "solid-js";
+import { GameObject, Script, ScriptParameters } from "../components/GameObject";
 import { RenderContext, useRenderContext } from "./RenderContext";
 
 function createSceneContext() {
@@ -14,6 +14,10 @@ function createSceneContext() {
   function removeObjectRef(deleteObject: GameObject) {
     gameObjects.delete(deleteObject);
   }
+
+  createEffect(() => {
+    console.table(Array.from(gameObjects));
+  });
 
   return {
     gameObjects,
@@ -36,43 +40,35 @@ export const useSceneContext = () => {
 };
 
 export interface Scene {
-  beforeRender?: (
-    Scene: SceneContext,
-    DrawApiContext: CanvasRenderingContext2D,
-    CanvasRef: HTMLCanvasElement,
-    RenderContext: RenderContext
-  ) => void;
-
-  afterRender?: (
-    Scene: SceneContext,
-    DrawApiContext: CanvasRenderingContext2D,
-    CanvasRef: HTMLCanvasElement,
-    RenderContext: RenderContext
-  ) => void;
+  beforeRender?: Script;
+  afterRender?: Script;
 }
 
 export function SceneContextProvider(p: ParentProps<Scene>) {
-  const ctx = createSceneContext();
+  const Scene = createSceneContext();
+  const RenderContext = useRenderContext();
 
-  const renderContext = useRenderContext();
-  const render = renderContext.getRender();
-  const canvasRef = renderContext.getCanvas();
+  const render = RenderContext.getRender();
+  const canvasRef = RenderContext.getCanvas();
+
+  const Context: any = {
+    render,
+    canvasRef,
+  };
 
   function loop() {
     render.save();
-    if (p.beforeRender) {
-      p.beforeRender(ctx, render, canvasRef, renderContext);
-    }
 
-    for (const gameObject of ctx.gameObjects) {
+    p.beforeRender && p.beforeRender(Context);
+
+    for (const gameObject of Scene.gameObjects) {
       for (const script of gameObject.scripts) {
-        script(gameObject);
+        Context.gameObject = gameObject;
+        script(Context as ScriptParameters);
       }
     }
 
-    if (p.afterRender) {
-      p.afterRender(ctx, render, canvasRef, renderContext);
-    }
+    p.afterRender && p.afterRender(Context);
 
     render.restore();
 
@@ -82,6 +78,6 @@ export function SceneContextProvider(p: ParentProps<Scene>) {
   requestAnimationFrame(loop);
 
   return (
-    <SceneContext.Provider value={ctx}>{p.children}</SceneContext.Provider>
+    <SceneContext.Provider value={Scene}>{p.children}</SceneContext.Provider>
   );
 }

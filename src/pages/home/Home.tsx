@@ -12,32 +12,36 @@ import TextureLoader from "@Components/Texture/TextureLoader";
 import styles from "./Home.module.css";
 import { mapping } from "@Components/Texture/mapping";
 import { Descriptor } from "@Components/Texture/main/descriptor";
+import { Script } from "@Components/GameObject";
+import { Link } from "solid-app-router";
 
 const Home: Component = () => {
-  function beforeRender(
-    _: SceneContext,
-    render: CanvasRenderingContext2D,
-    canvasRef: HTMLCanvasElement
-  ) {
-    render.imageSmoothingEnabled = false;
-    render.clearRect(0, 0, canvasRef.width, canvasRef.height);
+  const beforeRender: Script = (ctx) => {
+    ctx.render.imageSmoothingEnabled = false;
+    ctx.render.clearRect(0, 0, ctx.canvasRef.width, ctx.canvasRef.height);
     // render.translate(-16, 0);
-    render.translate(innerWidth / 2, 0);
+    ctx.render.translate(innerWidth / 2, 0);
 
-    render.scale(8, 8);
-  }
+    ctx.render.scale(6, 6);
+  };
+
   return (
-    <TextureLoader load={[mapping.main]}>
-      <Render>
-        <Canvas class={styles.player} />
-        <Scene beforeRender={beforeRender}>
-          <Tile texture={Descriptor.Grass.Normal} x={0} y={0} />
-          <Tile texture={Descriptor.Grass.Normal} x={1} y={0} />
-          <Tile texture={Descriptor.Grass.Normal} x={0} y={1} />
-          <Tile texture={Descriptor.Grass.Normal} x={1} y={1} />
-        </Scene>
-      </Render>
-    </TextureLoader>
+    <>
+      <Link class={styles.link} href="/test">
+        Go to Test
+      </Link>
+      <TextureLoader load={[mapping.main]}>
+        <Render>
+          <Canvas />
+          <Scene beforeRender={beforeRender}>
+            <Tile texture={Descriptor.Grass.Normal} x={0} y={0} />
+            <Tile texture={Descriptor.Grass.Normal} x={1} y={0} />
+            <Tile texture={Descriptor.Grass.Normal} x={0} y={1} />
+            <Tile texture={Descriptor.Grass.Normal} x={1} y={1} />
+          </Scene>
+        </Render>
+      </TextureLoader>
+    </>
   );
 };
 
