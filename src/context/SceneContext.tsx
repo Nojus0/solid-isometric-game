@@ -1,23 +1,29 @@
 /* @refresh reload */
 
-import { createContext, createEffect, ParentProps, useContext } from "solid-js";
+import {
+  createContext,
+  onCleanup,
+  onMount,
+  ParentProps,
+  useContext,
+} from "solid-js";
 import { GameObject, Script, ScriptParameters } from "../components/GameObject";
-import { RenderContext, useRenderContext } from "./RenderContext";
+import { useRenderContext } from "./RenderContext";
 
 function createSceneContext() {
   const gameObjects = new Set<GameObject>();
 
   function addObject(obj: GameObject) {
     gameObjects.add(obj);
+    console.clear();
+    console.table(Array.from(gameObjects));
   }
 
   function removeObjectRef(deleteObject: GameObject) {
     gameObjects.delete(deleteObject);
-  }
-
-  createEffect(() => {
+    console.clear();
     console.table(Array.from(gameObjects));
-  });
+  }
 
   return {
     gameObjects,
@@ -39,43 +45,49 @@ export const useSceneContext = () => {
   return ctx;
 };
 
-export interface Scene {
+export interface SceneProps {
   beforeRender?: Script;
   afterRender?: Script;
 }
 
-export function SceneContextProvider(p: ParentProps<Scene>) {
+export function SceneContextProvider(p: ParentProps<SceneProps>) {
   const Scene = createSceneContext();
   const RenderContext = useRenderContext();
 
   const render = RenderContext.getRender();
   const canvasRef = RenderContext.getCanvas();
 
-  const Context: any = {
+  let isCleanup = false;
+  const context: any = {
     render,
     canvasRef,
   };
 
-  function loop() {
-    render.save();
+  onCleanup(() => {
+    isCleanup = true;
+  });
 
-    p.beforeRender && p.beforeRender(Context);
+  function loop() {
+    if (isCleanup) return;
+
+    render.save();
+    p.beforeRender && p.beforeRender(context);
 
     for (const gameObject of Scene.gameObjects) {
       for (const script of gameObject.scripts) {
-        Context.gameObject = gameObject;
-        script(Context as ScriptParameters);
+        context.gameObject = gameObject;
+        script(context as ScriptParameters);
       }
     }
 
-    p.afterRender && p.afterRender(Context);
+    p.afterRender && p.afterRender(context);
 
     render.restore();
 
     requestAnimationFrame(loop);
   }
 
-  requestAnimationFrame(loop);
+  onMount(() => requestAnimationFrame(loop));
 
   return (
     <SceneContext.Provider value={Scene}>{p.children}</SceneContext.Provider>

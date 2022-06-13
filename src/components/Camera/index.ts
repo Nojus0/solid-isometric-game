@@ -1,14 +1,7 @@
 /* @refresh reload */
 
 import { Component, onCleanup, onMount } from "solid-js";
-import { useRenderContext } from "../../context/RenderContext";
-import { useSceneContext } from "../../context/SceneContext";
-import {
-  createGameObject,
-  GameObject,
-  Script,
-  ScriptParameters,
-} from "../GameObject";
+import { createGameObject, ScriptParameters } from "../GameObject";
 
 const Camera: Component = (p) => {
   let MovementX = 0;
