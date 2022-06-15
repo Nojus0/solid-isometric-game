@@ -6,7 +6,7 @@ import tsconfigPaths from "vite-tsconfig-paths"
 export default defineConfig({
   plugins: [splitVendorChunkPlugin(), tsconfigPaths(), solidPlugin()],
   build: {
-    target: "esnext",
+    target: "es6",
     polyfillDynamicImport: false,
     rollupOptions: {
       output: {

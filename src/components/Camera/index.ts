@@ -1,50 +1,61 @@
 /* @refresh reload */
 
-import { Component, onCleanup, onMount } from "solid-js";
-import { createGameObject, ScriptParameters } from "../GameObject";
+import { Component } from "solid-js"
+import { createGameObject, ScriptParameters } from "../GameObject"
 
-export interface Camera {
+export interface CameraProps {
   Speed: number
+  x: number
+  y: number
+  OnMove?: (x: number, y: number) => void
 }
 
 // Precise coords with tile scale?
-const Camera: Component<Camera> = (p) => {
-  let MovementX = innerWidth / 8;
-  let MovementY = 0;
-  const Keyboard = new Map<string, boolean>([]);
+const Camera: Component<{ camera: CameraProps }> = p => {
+  const Keyboard = new Map<string, boolean>([])
 
   function Draw(ctx: ScriptParameters) {
-    if (Keyboard.get("w")) {
-      MovementY += p.Speed;
+    var isW = Keyboard.get("w")
+    var isS = Keyboard.get("s")
+    var isA = Keyboard.get("a")
+    var isD = Keyboard.get("d")
+
+    if (isW) {
+      p.camera.y += p.camera.Speed
     }
-    if (Keyboard.get("s")) {
-      MovementY -= p.Speed;
+    if (isS) {
+      p.camera.y -= p.camera.Speed
     }
-    if (Keyboard.get("a")) {
-      MovementX += p.Speed;
+    if (isA) {
+      p.camera.x += p.camera.Speed
     }
-    if (Keyboard.get("d")) {
-      MovementX -= p.Speed;
+    if (isD) {
+      p.camera.x -= p.camera.Speed
     }
 
-    ctx.render.translate(MovementX, MovementY);
+    if (isW || isS || isA || isD) {
+      p.camera.OnMove && p.camera.OnMove(p.camera.x, p.camera.y)
+    }
+
+    ctx.render.translate(p.camera.x, p.camera.y)
   }
+  console.log(`render`)
 
   createGameObject({
     name: "MovementCamera",
     type: "Camera",
     scripts: [Draw],
-  });
+  })
 
-  onkeydown = (e) => {
-    Keyboard.set(e.key, true);
-  };
+  onkeydown = e => {
+    Keyboard.set(e.key, true)
+  }
 
-  onkeyup = (e) => {
-    Keyboard.set(e.key, false);
-  };
+  onkeyup = e => {
+    Keyboard.set(e.key, false)
+  }
 
-  return null;
-};
+  return null
+}
 
-export default Camera;
+export default Camera
