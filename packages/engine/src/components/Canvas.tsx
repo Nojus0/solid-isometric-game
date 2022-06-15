@@ -6,6 +6,8 @@ import { useRenderContext } from "../Context/RenderContext";
 function SetCanvasSize(canvas: HTMLCanvasElement) {
   canvas.style.height = "100%";
   canvas.style.width = "100%";
+
+
   canvas.height = innerHeight * devicePixelRatio;
   canvas.width = innerWidth * devicePixelRatio;
 }

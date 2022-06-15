@@ -2,6 +2,6 @@
     "private": true,
     "scripts": {
         "build": "pnpm -r build",
-        "dev": "pnpm -r start"
+        "dev": "pnpm -r --parallel --stream run start "
     }
 }

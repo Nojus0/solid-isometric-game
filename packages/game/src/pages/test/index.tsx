@@ -15,6 +15,7 @@ import {
 import Tile, { TILE_PX } from "@Components/Tile"
 
 const Test: Component = () => {
+
   const CameraProps: CameraProps = {
     Speed: 15,
     x: innerWidth / 2,
@@ -31,8 +32,12 @@ const Test: Component = () => {
           <Canvas />
           <Scene>
             <Camera camera={CameraProps} />
-            <Tile texture={Descriptor.Grass.Normal} x={0} y={0} />
-            <Tile texture={Descriptor.Tree.Normal} x={-1} y={-1} />
+            <Tile z={0} texture={Descriptor.Grass.Normal} x={0} y={0} />
+            <Tile z={1} texture={Descriptor.Grass.Bits} x={0} y={0} />
+            <Tile z={0} texture={Descriptor.Tree.Normal} x={0} y={0} />
+{/* 
+            <Tile texture={Descriptor.Tree.Normal} x={0} y={0} />
+
             <Tile texture={Descriptor.Grass.Small} x={0} y={1} />
             <Tile texture={Descriptor.Grass.Bits} x={0} y={2} />
 
@@ -50,7 +55,7 @@ const Test: Component = () => {
             <Tile texture={Descriptor.GrassAutumn.Small} x={4} y={1} />
 
             <Tile texture={Descriptor.Campfire.Normal} x={5} y={0} />
-            <Tile texture={Descriptor.Tree.Normal} x={6} y={0} />
+            <Tile texture={Descriptor.Tree.Normal} x={6} y={0} /> */}
           </Scene>
         </Render>
       </TextureLoader>

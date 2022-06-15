@@ -28,10 +28,10 @@ const Home: Component = () => {
         <RenderContextProvider>
           <Canvas />
           <Scene beforeRender={beforeRender}>
-            <Tile texture={Descriptor.Grass.Normal} x={0} y={0} />
-            <Tile texture={Descriptor.Grass.Normal} x={1} y={0} />
-            <Tile texture={Descriptor.Grass.Normal} x={0} y={1} />
-            <Tile texture={Descriptor.Grass.Normal} x={1} y={1} />
+            <Tile z={0} texture={Descriptor.Grass.Normal} x={0} y={0} />
+            <Tile z={0} texture={Descriptor.Grass.Normal} x={1} y={0} />
+            <Tile z={0} texture={Descriptor.Grass.Normal} x={0} y={1} />
+            <Tile z={0} texture={Descriptor.Grass.Normal} x={1} y={1} />
           </Scene>
         </RenderContextProvider>
       </TextureLoader>

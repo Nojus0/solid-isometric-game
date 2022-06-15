@@ -89,7 +89,7 @@ const Descriptor = {
     Normal: {
       name: "Tree_Normal",
       pos: { x: 320, y: 0 },
-      size: { x: 32, y: 56 },
+      size: { x: 32, y: 64 },
     },
   },
 }
