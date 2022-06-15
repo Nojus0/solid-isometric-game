@@ -1,0 +1,35 @@
+{
+  "name": "Engine",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.18.5",
+    "@babel/plugin-transform-typescript": "^7.18.4",
+    "@babel/preset-typescript": "^7.17.12",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-commonjs": "^22.0.0",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-typescript": "^8.3.3",
+    "babel-preset-solid": "^1.4.4",
+    "typescript": "^4.6.4",
+    "vite": "^2.9.9",
+    "vite-plugin-solid": "^2.2.6",
+    "vite-tsconfig-paths": "^3.5.0",
+    "rollup": "^2.75.6"
+  },
+  "dependencies": {
+    "solid-js": "^1.4.2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
