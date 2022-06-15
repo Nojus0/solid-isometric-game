@@ -61,8 +61,6 @@ export const Camera: Component<{ camera: CameraProps }> = p => {
       p.camera.OnMove && p.camera.OnMove(p.camera.x, p.camera.y)
     }
 
-    console.log(p.camera)
-
     ctx.render.translate(p.camera.x, p.camera.y)
   }
 
