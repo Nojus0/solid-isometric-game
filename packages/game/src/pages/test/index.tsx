@@ -15,11 +15,10 @@ import {
 import Tile, { TILE_PX } from "@Components/Tile"
 
 const Test: Component = () => {
-
   const CameraProps: CameraProps = {
     Speed: 15,
-    x: innerWidth / 2,
-    y: TILE_PX * 1.5,
+    x: innerWidth / 2 + TILE_PX / 2,
+    y: TILE_PX * 2.95,
   }
 
   return (
@@ -32,10 +31,24 @@ const Test: Component = () => {
           <Canvas />
           <Scene>
             <Camera camera={CameraProps} />
-            <Tile z={0} texture={Descriptor.Grass.Normal} x={0} y={0} />
-            <Tile z={1} texture={Descriptor.Grass.Bits} x={0} y={0} />
-            <Tile z={0} texture={Descriptor.Tree.Normal} x={0} y={0} />
-{/* 
+
+            <Tile texture={Descriptor.Grass.Normal} x={-1} y={0} />
+
+            <Tile texture={Descriptor.Grass.Normal} x={0} y={-1} />
+
+
+            <Tile texture={Descriptor.Grass.Normal} x={0} y={0} />
+            <Tile texture={Descriptor.Grass.Bits} x={-1} y={-1} />
+            <Tile texture={Descriptor.Tree.Normal} x={-1.5} y={-0.75} />
+
+            <Tile texture={Descriptor.Grass.Normal} x={1} y={0} />
+            <Tile texture={Descriptor.Grass.Normal} x={0} y={1} />
+            <Tile texture={Descriptor.Grass.Bits} x={0} y={-1} />
+
+
+            {/* <Tile texture={Descriptor.Grass.Normal} x={-1} y={0} /> */}
+
+            {/* 
             <Tile texture={Descriptor.Tree.Normal} x={0} y={0} />
 
             <Tile texture={Descriptor.Grass.Small} x={0} y={1} />

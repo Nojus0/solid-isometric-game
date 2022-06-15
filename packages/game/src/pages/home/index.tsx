@@ -16,7 +16,7 @@ import Tile, { TILE_PX } from "@Components/Tile"
 const Home: Component = () => {
   function beforeRender(ctx: ScriptParameters) {
     // ctx.render.translate((-TILE_SIZE * TILE_SCALE) / 2, 0);
-    ctx.render.translate(innerWidth / 2, TILE_PX * 1.5)
+    ctx.render.translate(innerWidth / 2 + TILE_PX / 2, TILE_PX * 1.5)
   }
 
   return (
@@ -28,10 +28,10 @@ const Home: Component = () => {
         <RenderContextProvider>
           <Canvas />
           <Scene beforeRender={beforeRender}>
-            <Tile z={0} texture={Descriptor.Grass.Normal} x={0} y={0} />
-            <Tile z={0} texture={Descriptor.Grass.Normal} x={1} y={0} />
-            <Tile z={0} texture={Descriptor.Grass.Normal} x={0} y={1} />
-            <Tile z={0} texture={Descriptor.Grass.Normal} x={1} y={1} />
+            <Tile texture={Descriptor.Grass.Normal} x={0} y={0} />
+            <Tile texture={Descriptor.Grass.Normal} x={1} y={0} />
+            <Tile texture={Descriptor.Grass.Normal} x={0} y={1} />
+            <Tile texture={Descriptor.Grass.Normal} x={1} y={1} />
           </Scene>
         </RenderContextProvider>
       </TextureLoader>
