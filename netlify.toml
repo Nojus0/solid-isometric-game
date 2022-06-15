@@ -17,3 +17,6 @@
   for = "*.png"
   [headers.values]
   Cache-Control = "public, max-age=604800, immutable"
+
+[[plugins]]
+package = "/.netlify/netlify-plugin-pnpm"
