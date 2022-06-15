@@ -11,7 +11,7 @@ import {
   TextureLoader,
   SceneContextProvider as Scene,
   RenderContextProvider as Render,
-} from "engine"
+} from "Engine"
 import Tile, { TILE_PX } from "@Components/Tile"
 
 const Test: Component = () => {
