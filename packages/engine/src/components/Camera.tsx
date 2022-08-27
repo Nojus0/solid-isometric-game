@@ -1,7 +1,7 @@
 /* @refresh reload */
 
 import { Component } from "solid-js"
-import { createGameObject, ScriptParameters } from "../GameObject"
+import { createGameObject, GameObject, ScriptParameters } from "../GameObject"
 import { lerp, NormalizeVector2, Vector2 } from "../Math/Utils"
 
 export interface CameraProps {
@@ -15,18 +15,18 @@ export interface CameraProps {
 export const Camera: Component<{ camera: CameraProps }> = p => {
   const Keyboard = new Map<string, boolean>([])
 
-  createGameObject({
-    name: "MovementCamera",
-    type: "Camera",
-    scripts: [Draw],
-  })
+  // createGameObject({
+  //   name: "MovementCamera",
+  //   type: "Camera",
+  //   scripts: [Draw],
+  // })
 
   const RealPos: Vector2 = {
     x: p.camera.x,
     y: p.camera.y,
   }
 
-  function Draw(ctx: ScriptParameters) {
+  function Tick(ctx: ScriptParameters) {
     var isW = Keyboard.get("w")
     var isS = Keyboard.get("s")
     var isA = Keyboard.get("a")
@@ -53,9 +53,9 @@ export const Camera: Component<{ camera: CameraProps }> = p => {
     } else if (isD) {
       RealPos.x -= p.camera.Speed
     }
-    
+
     p.camera.x = Math.floor(lerp(p.camera.x, RealPos.x, 0.15))
-    p.camera.y = Math.floor(lerp(p.camera.y, RealPos.y, .15))
+    p.camera.y = Math.floor(lerp(p.camera.y, RealPos.y, 0.15))
 
     if (isW || isS || isA || isD) {
       p.camera.OnMove && p.camera.OnMove(p.camera.x, p.camera.y)
@@ -65,12 +65,18 @@ export const Camera: Component<{ camera: CameraProps }> = p => {
   }
 
   onkeydown = e => {
-    Keyboard.set(e.key, true)
+    Keyboard.set(e.key.toLowerCase(), true)
   }
 
   onkeyup = e => {
-    Keyboard.set(e.key, false)
+    Keyboard.set(e.key.toLocaleLowerCase(), false)
   }
 
-  return null
+  return (
+    <GameObject
+      name="MovementCamera"
+      type="Camera"
+      scripts={[Tick]}
+    ></GameObject>
+  )
 }

@@ -1,5 +1,5 @@
 import { useSceneContext } from "../Context/SceneContext"
-import { onCleanup, onMount } from "solid-js"
+import { Component, onCleanup, onMount } from "solid-js"
 
 export type Script = (params: ScriptParameters) => void
 
@@ -24,4 +24,13 @@ export function createGameObject(gameObject: GameObject) {
   })
 
   return gameObject
+}
+
+/**
+ * Wrapper for createGameObject. A Component that just calls createGameObject
+ * NOTE: Doesn't return the created GameObject.
+ */
+export const GameObject: Component<GameObject> = (p) => {
+  createGameObject(p)
+  return null
 }

@@ -2,10 +2,13 @@
 
 import { Component } from "solid-js"
 import {
+  Interval,
   createGameObject,
+  GameObject,
   gTextures,
   IsoToCartesian,
   ScriptParameters,
+  Vector2,
 } from "Engine"
 import { TextureDescriptor } from "../Texture/main/descriptor"
 import { mapping } from "../Texture/mapping"
@@ -21,15 +24,8 @@ export interface Tile {
 }
 
 const Tile: Component<Tile> = p => {
-  createGameObject({
-    name: "Grass",
-    type: "Tile",
-    scripts: [Tick],
-  })
-
   function Tick(ctx: ScriptParameters) {
     ctx.render.save()
-
     var a = IsoToCartesian(p.x, p.y, p.texture.size)
 
     ctx.render.drawImage(
@@ -46,7 +42,8 @@ const Tile: Component<Tile> = p => {
     ctx.render.restore()
   }
 
-  return null
+  return <GameObject name="Tile" type="Tile" scripts={[Tick]}></GameObject>
 }
+
 
 export default Tile
