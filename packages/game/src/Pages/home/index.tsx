@@ -8,8 +8,8 @@ import {
   TextureLoader,
 } from "Engine"
 import { Canvas } from "Engine"
-import { mapping } from "@Components/Texture/mapping"
-import Descriptor from "@Components/Texture/main/descriptor"
+import { mapping } from "@Textures/mapping"
+import Descriptor from "@Textures/main/descriptor"
 import { Link } from "solid-app-router"
 import Tile, { TILE_PX } from "@Components/Tile"
 

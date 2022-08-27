@@ -2,9 +2,9 @@
 import { Route, Router, Routes } from "solid-app-router"
 import { lazy, Suspense } from "solid-js"
 import { render } from "solid-js/web"
-import Home from "./pages/home"
+import Home from "./Pages/home"
 
-const TestRoute = lazy(() => import("./pages/test"))
+const TestRoute = lazy(() => import("./Pages/test"))
 
 render(
   () => (

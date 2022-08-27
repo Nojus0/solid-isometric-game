@@ -13,6 +13,10 @@ import { useRenderContext } from "./RenderContext";
 function createSceneContext() {
   const gameObjects = new Set<GameObject>();
 
+  // Can't add multiple objects at once like an array to a set,
+  // so to add multiple you just need to spam the addObject function
+
+
   function addObject(obj: GameObject) {
     gameObjects.add(obj);
     console.clear();
@@ -35,6 +39,7 @@ function createSceneContext() {
 export type SceneContext = ReturnType<typeof createSceneContext>;
 
 export const SceneContext = createContext<SceneContext>();
+
 export const useSceneContext = () => {
   const ctx = useContext(SceneContext);
 
@@ -58,6 +63,7 @@ export function SceneContextProvider(p: ParentProps<SceneProps>) {
   const canvasRef = RenderContext.getCanvas();
 
   let isCleanup = false;
+
   const context: any = {
     render,
     canvasRef,

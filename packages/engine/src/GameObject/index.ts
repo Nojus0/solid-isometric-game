@@ -20,8 +20,9 @@ export function createGameObject(gameObject: GameObject) {
 
   onMount(() => {
     Scene.addObject(gameObject)
-    onCleanup(() => Scene.removeObjectRef(gameObject))
   })
+
+  onCleanup(() => Scene.removeObjectRef(gameObject))
 
   return gameObject
 }

@@ -1,6 +1,6 @@
-export * from "./components/Camera"
-export * from "./components/Canvas"
-export * from "./components/TextureLoader"
+export * from "./Components/Camera"
+export * from "./Components/Canvas"
+export * from "./Components/TextureLoader"
 
 export * from "./GameObject/index"
 export * from "./Math/IsoToCartesian"
