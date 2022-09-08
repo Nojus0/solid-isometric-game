@@ -2,16 +2,13 @@
 
 import { Component } from "solid-js"
 import {
-  Interval,
-  createGameObject,
   GameObject,
   gTextures,
   IsoToCartesian,
   ScriptParameters,
-  Vector2,
 } from "Engine"
-import { TextureDescriptor } from "../Texture/main/descriptor"
-import { mapping } from "../Texture/mapping"
+import { TextureDescriptor } from "@Textures/main/descriptor"
+import { mapping } from "@Textures/mapping"
 
 export const TILE_SIZE = 32
 export const TILE_SCALE = 8
@@ -26,7 +23,7 @@ export interface Tile {
 const Tile: Component<Tile> = p => {
   function Tick(ctx: ScriptParameters) {
     ctx.render.save()
-    var a = IsoToCartesian(p.x, p.y, p.texture.size)
+    const a = IsoToCartesian(p.x, p.y, p.texture.size)
 
     ctx.render.drawImage(
       gTextures.get(mapping.main)!,
