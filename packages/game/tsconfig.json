@@ -13,8 +13,8 @@
     "isolatedModules": true,
     "baseUrl": "./",
     "paths": {
-      "@Components/*": ["./src/components/*"],
-      "@Textures/*": ["./src/components/Texture/*"]
+      "@Components/*": ["./src/Components/*"],
+      "@Textures/*": ["./src/Components/Texture/*"]
     }
   }
 }
