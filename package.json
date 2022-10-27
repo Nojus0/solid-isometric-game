@@ -1,7 +1,13 @@
 {
     "private": true,
     "scripts": {
-        "build": "pnpm -r build",
-        "dev": "pnpm -r --parallel --stream run start "
+        "build:all": "pnpm -r build",
+        "build:engine": "cd packages/engine && npm run build",
+        "build:game": "cd packages/game && npm run build",
+        "dev": "pnpm run build:engine && pnpm -r --parallel --stream run start"
+    },
+    "stackblitz": {
+        "startCommand": "pnpm install && pnpm run dev",
+        "installDependencies": false
     }
 }
