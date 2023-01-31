@@ -9,9 +9,8 @@ import {
 } from "Engine"
 import { Canvas } from "Engine"
 import { mapping } from "@Textures/mapping"
-import Descriptor from "@Textures/main/descriptor"
 import { Link } from "solid-app-router"
-import Tile, { TILE_PX } from "@Components/Tile"
+import  { TILE_PX } from "@Components/Tile"
 
 const Home: Component = () => {
   function beforeRender(ctx: ScriptParameters) {
@@ -28,10 +27,10 @@ const Home: Component = () => {
         <RenderContextProvider>
           <Canvas />
           <Scene beforeRender={beforeRender}>
-            <Tile texture={Descriptor.Grass.Normal} x={0} y={0} />
-            <Tile texture={Descriptor.Grass.Normal} x={1} y={0} />
-            <Tile texture={Descriptor.Grass.Normal} x={0} y={1} />
-            <Tile texture={Descriptor.Grass.Normal} x={1} y={1} />
+            {/*<Tile texture={Descriptor.Grass.Normal} x={0} y={0} />*/}
+            {/*<Tile texture={Descriptor.Grass.Normal} x={1} y={0} />*/}
+            {/*<Tile texture={Descriptor.Grass.Normal} x={0} y={1} />*/}
+            {/*<Tile texture={Descriptor.Grass.Normal} x={1} y={1} />*/}
           </Scene>
         </RenderContextProvider>
       </TextureLoader>

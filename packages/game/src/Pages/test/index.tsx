@@ -2,24 +2,51 @@
 
 import { Component } from "solid-js"
 import { mapping } from "@Textures/mapping"
-import Descriptor from "@Components/Texture/main/descriptor"
 import { Link } from "solid-app-router"
 import {
   Camera,
   CameraProps,
   Canvas,
-  TextureLoader,
+  GameObject,
+  RenderContextProvider as Render,
   SceneContextProvider as Scene,
-  RenderContextProvider as Render
+  TextureLoader
 } from "Engine"
 import Tile, { TILE_PX } from "../../Components/Tile"
-import RenderLayer from "Engine/src/Components/RenderLayer"
+import { d_main } from "@Textures/main/descriptor"
+
 
 const Test: Component = () => {
   const CameraProps: CameraProps = {
     Speed: 15,
     x: innerWidth / 2 + TILE_PX / 2,
     y: TILE_PX * 2.95
+  }
+
+  type Map = Array<[string, number, number, number, number]>
+
+  const ActiveMap: Map = [
+    ["Cobblestone::Normal", 0, 0, 2, 2],
+    ["Cobblestone::Small", -1, -1, 1, 1]
+  ]
+
+  function MapToTiles(e: Map) {
+    const Result = ActiveMap.map((tile_arr) => {
+      const Objs: GameObject[] = []
+
+      for (let x = 0; x < tile_arr[3]; x++) {
+        for (let y = 0; y < tile_arr[4]; y++) {
+          const tileList = <Tile texture={d_main.get(tile_arr[0])!} x={tile_arr[1] + x}
+                                 y={tile_arr[2] + y} /> as unknown as GameObject
+          Objs.push(tileList)
+        }
+
+      }
+
+      return Objs as unknown as Element
+    })
+
+    return Result
   }
 
   return (
@@ -38,22 +65,9 @@ const Test: Component = () => {
                 wrong so the isometric illusion will be broken.
             */}
 
-            <RenderLayer>
-              <Tile texture={Descriptor.Grass.Normal} x={-2} y={0} />
-              <Tile texture={Descriptor.Grass.Normal} x={-1} y={-1} />
-              <Tile texture={Descriptor.Grass.Normal} x={-1} y={0} />
-              <Tile texture={Descriptor.Grass.Normal} x={0} y={-1} />
-              <Tile texture={Descriptor.Grass.Normal} x={0} y={0} />
-              <Tile texture={Descriptor.Grass.Normal} x={1} y={0} />
-              <Tile texture={Descriptor.Grass.Normal} x={0} y={1} />
-              <Tile texture={Descriptor.Grass.Normal} x={1} y={1} />
-            </RenderLayer>
-
-            <RenderLayer>
-              <Tile texture={Descriptor.Grass.Bits} x={-1} y={-1} />
-              <Tile texture={Descriptor.Grass.Bits} x={0} y={-1} />
-              <Tile texture={Descriptor.Tree.Normal} x={-1.5} y={-0.75} />
-            </RenderLayer>
+            {
+              MapToTiles(ActiveMap)
+            }
 
           </Scene>
         </Render>
